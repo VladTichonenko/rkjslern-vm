@@ -1,0 +1,4137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusCore | Премиальные IT-решения</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+   :root {
+      --neon-cyan: #0055FE;         /* Более светлый, но глубокий синий (как сумерки) */  
+    --neon-magenta: #003366;       /* Насыщенный синий (как ночное небо) */  
+    --neon-green: #0066cc;          /* Тёмный сине-зелёный (глубокий морской оттенок) */       /* Синий с легким голубым оттенком */
+    --neon-yellow: #ffee00;       /* Контрастный жёлтый (оставил) */
+    
+    --deep-space: #000000;;        /* Тёмный космический фон */
+    --cosmic-purple: #07071a;     /* Тёмно-синий */
+    --void-black: #000000;        /* Самый тёмный оттенок */
+    --stellar-blue: #0a1a3a;      /* Более насыщенный синеватый */
+    --plasma-gray: #161631;       /* Серый с выраженным синим подтоном */
+    --light-speed: #e0f0ff;       /* Светлый голубоватый (мягче) */
+    --comet-tail: rgba(160, 200, 255, 0.7);  /* Более выраженное синее свечение */
+    --galaxy-edge: rgba(10, 20, 40, 0.8);    /* Более глубокий синий */
+    
+    /* Градиенты */
+    --gradient-main: linear-gradient(135deg, var(--neon-magenta), var(--neon-cyan));
+    --gradient-card: linear-gradient(145deg, #0e0e25, #0a0a1a);
+    --gradient-accent: linear-gradient(90deg, var(--neon-magenta), var(--neon-cyan));
+    --gradient-dark: linear-gradient(135deg, #07071a, #0a0a1f);
+}
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        @font-face {
+            font-family: 'Inter';
+            font-weight: 100 900;
+            font-display: swap;
+            src: url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        }
+
+        body {
+            background-color: var(--deep-space);
+            color: var(--light-speed);
+            overflow-x: hidden;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(26, 10, 42, 0.3) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(10, 26, 42, 0.3) 0%, transparent 30%);
+        }
+
+        /* Глобальные анимации */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.9; }
+        }
+
+        @keyframes neon-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 
+                    0 0 8px currentColor,
+                    0 0 16px currentColor,
+                    0 0 24px currentColor;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+
+        @keyframes hologram {
+            0% { opacity: 0.8; filter: brightness(1.2) contrast(1.2); }
+            50% { opacity: 1; filter: brightness(1.5) contrast(1.5); }
+            100% { opacity: 0.8; filter: brightness(1.2) contrast(1.2); }
+        }
+
+        @keyframes particle-move {
+            from { transform: translateY(0) translateX(0); }
+            to { transform: translateY(-100vh) translateX(20px); }
+        }
+
+        @keyframes border-glow {
+            0%, 100% { box-shadow: 0 0 10px 0 rgba(0, 240, 255, 0.3); }
+            50% { box-shadow: 0 0 20px 5px rgba(0, 240, 255, 0.5); }
+        }
+
+        @keyframes text-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Базовые стили */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            position: relative;
+            overflow: hidden;
+            /* padding: 2rem 0; */
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 6rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            letter-spacing: -0.03em;
+            background-size: 200% 200%;
+            animation: text-gradient 8s ease infinite;
+        }
+
+        .section-subtitle {
+            color: var(--comet-tail);
+            font-size: 1.35rem;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: var(--gradient-accent);
+            color: var(--void-black);
+            box-shadow: 0 4px 30px rgba(0, 240, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px rgba(0, 240, 255, 0.5);
+            animation: border-glow 2s infinite;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-main);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 240, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 240, 255, 0.2);
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+        }
+
+        /* Частицы */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(0, 240, 255, 0.5);
+            border-radius: 50%;
+            animation: particle-move linear infinite;
+        }
+
+        /* Шапка */
+        header {
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            background: rgba(11, 11, 21, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            padding: 1rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(5, 5, 16, 0.95);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            color: var(--void-black);
+            animation: pulse 3s ease infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--comet-tail);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+        }
+
+        .nav-link:hover {
+            color: var(--neon-cyan);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-cyan);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+            color: var(--neon-cyan);
+        }
+
+        /* Герой секция */
+        .hero {
+            height: 100vh;
+            min-height: 800px;
+            display: flex;
+            align-items: center;
+            background: radial-gradient(ellipse at 70% 50%, rgba(26, 10, 42, 0.5), transparent 70%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="rgba(0,240,255,0.03)" d="M0,0 L100,0 L100,100 L0,100 Z"/></svg>');
+            background-size: 30px 30px;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            background: linear-gradient(90deg, #ffffff, var(--neon-cyan), var(--neon-magenta));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% 200%;
+            animation: text-gradient 8s ease infinite;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.35rem;
+            color: var(--comet-tail);
+            margin-bottom: 3rem;
+            max-width: 500px;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .hero-image {
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .hero-main-image {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 20px;
+            transform-style: preserve-3d;
+            transform: rotateY(-10deg) rotateX(5deg);
+            box-shadow: 
+                0 40px 80px rgba(0, 240, 255, 0.2),
+                0 0 0 1px rgba(0, 240, 255, 0.1);
+            animation: float 8s ease-in-out infinite;
+            filter: brightness(1.1) contrast(1.1);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.2), transparent 60%);
+            z-index: -1;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Секция услуг */
+        .services {
+            background-color: var(--void-black);
+            position: relative;
+            background-image: 
+                linear-gradient(to bottom, var(--void-black), var(--deep-space)),
+                url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="rgba(0,240,255,0.03)" d="M0,0 L100,0 L100,100 L0,100 Z"/></svg>');
+            background-size: cover, 30px 30px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-card {
+            background: var(--gradient-card);
+            border-radius: 20px;
+            padding: 3rem;
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 240, 255, 0.15);
+            border-color: var(--neon-cyan);
+            background: linear-gradient(145deg, #121230, #0d0d20);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.05), transparent);
+            z-index: -1;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-main);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: var(--void-black);
+            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.3);
+        }
+
+        .service-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .service-description {
+            color: var(--comet-tail);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--neon-cyan);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .service-link i {
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .service-link:hover {
+            color: var(--neon-magenta);
+        }
+
+        .service-link:hover i {
+            transform: translateX(5px);
+        }
+
+        .service-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-main);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .service-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Секция портфолио */
+        .portfolio {
+            background-color: var(--deep-space);
+            position: relative;
+            background-image: 
+                linear-gradient(to bottom, var(--deep-space), var(--void-black)),
+                url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="rgba(0,240,255,0.03)" d="M0,0 L100,0 L100,100 L0,100 Z"/></svg>');
+            background-size: cover, 30px 30px;
+        }
+
+        .portfolio-slider {
+            position: relative;
+            z-index: 2;
+            margin-top: 3rem;
+        }
+
+        .swiper {
+            width: 100%;
+            padding: 3rem 0;
+        }
+
+        .portfolio-slide {
+            background: var(--gradient-card);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .portfolio-slide:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 240, 255, 0.2);
+            border-color: var(--neon-cyan);
+        }
+
+        .portfolio-slide::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-main);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-slide:hover::after {
+            transform: scaleX(1);
+        }
+
+        .portfolio-image {
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .portfolio-slide:hover .portfolio-image img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(5, 5, 16, 0.9), transparent 50%);
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .portfolio-slide:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-info {
+            padding: 2.5rem;
+        }
+
+        .portfolio-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .portfolio-category {
+            color: var(--neon-cyan);
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .portfolio-description {
+            color: var(--comet-tail);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .portfolio-tag {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--neon-cyan);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-slide:hover .portfolio-tag {
+            background: rgba(0, 240, 255, 0.2);
+            color: white;
+        }
+
+        .swiper-pagination-bullet {
+            background: var(--comet-tail);
+            opacity: 1;
+            width: 12px;
+            height: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: var(--neon-cyan);
+            transform: scale(1.2);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Секция команды */
+        .team {
+            background-color: var(--void-black);
+            position: relative;
+            background-image: 
+                linear-gradient(to bottom, var(--void-black), var(--cosmic-purple)),
+                url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="rgba(0,240,255,0.03)" d="M0,0 L100,0 L100,100 L0,100 Z"/></svg>');
+            background-size: cover, 30px 30px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .team-member {
+            background: var(--gradient-card);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 240, 255, 0.15);
+            border-color: var(--neon-cyan);
+        }
+
+        .team-member::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-main);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .team-member:hover::after {
+            transform: scaleX(1);
+        }
+
+        .member-image {
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .member-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(5, 5, 16, 0.3), transparent);
+            z-index: 1;
+        }
+
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .team-member:hover .member-image img {
+            transform: scale(1.1);
+        }
+
+        .member-info {
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .member-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .member-position {
+            color: var(--neon-cyan);
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .member-bio {
+            color: var(--comet-tail);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .member-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .member-social a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(0, 240, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--comet-tail);
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .member-social a:hover {
+            background: var(--neon-cyan);
+            color: var(--void-black);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3);
+        }
+
+        /* CTA секция */
+        .cta {
+            background: linear-gradient(135deg, var(--cosmic-purple), var(--stellar-blue));
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background-image: 
+                url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="rgba(0,240,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z"/></svg>'),
+                linear-gradient(135deg, var(--cosmic-purple), var(--stellar-blue));
+            background-size: 30px 30px, cover;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background:#000000;
+            animation: pulse 10s ease infinite;
+            z-index: 1;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, white, var(--neon-cyan), var(--neon-magenta));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% 200%;
+            animation: text-gradient 8s ease infinite;
+            letter-spacing: -0.03em;
+        }
+
+        .cta-description {
+            color: var(--comet-tail);
+            margin-bottom: 3rem;
+            font-size: 1.35rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        /* Футер */
+        footer {
+            background-color: var(--void-black);
+            padding: 8rem 0 3rem;
+            position: relative;
+            background-image: 
+                linear-gradient(to bottom, var(--void-black), var(--deep-space)),
+                url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="rgba(0,240,255,0.03)" d="M0,0 L100,0 L100,100 L0,100 Z"/></svg>');
+            background-size: cover, 30px 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4rem;
+            margin-bottom: 5rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: white;
+            position: relative;
+            display: inline-block;
+            letter-spacing: -0.02em;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--gradient-main);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-column ul li a {
+            color: var(--comet-tail);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-weight: 300;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .footer-column ul li a::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--neon-cyan);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--neon-cyan);
+            transform: translateX(5px);
+            padding-left: 2rem;
+        }
+
+        .footer-column ul li a:hover::before {
+            opacity: 1;
+            left: 5px;
+        }
+
+        .footer-about {
+            max-width: 350px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .footer-about p {
+            color: var(--comet-tail);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(0, 240, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--comet-tail);
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .footer-social a:hover {
+            background: var(--neon-cyan);
+            color: var(--void-black);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            color: var(--comet-tail);
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        .footer-bottom a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--neon-magenta);
+            text-decoration: underline;
+        }
+
+        /* Анимации при скролле */
+        [data-aos] {
+            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        [data-aos="fade-up"] {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        [data-aos="fade-up"].aos-animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        [data-aos="fade-left"] {
+            opacity: 0;
+            transform: translateX(40px);
+        }
+
+        [data-aos="fade-left"].aos-animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        [data-aos="fade-right"] {
+            opacity: 0;
+            transform: translateX(-40px);
+        }
+
+        [data-aos="fade-right"].aos-animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        [data-aos="zoom-in"] {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        [data-aos="zoom-in"].aos-animate {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        [data-aos="flip-up"] {
+            opacity: 0;
+            transform: perspective(1000px) rotateX(30deg) translateY(50px);
+            transform-origin: bottom;
+        }
+
+        [data-aos="flip-up"].aos-animate {
+            opacity: 1;
+            transform: perspective(1000px) rotateX(0) translateY(0);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 4rem;
+            }
+            
+            .section-title {
+                font-size: 3.5rem;
+            }
+            
+            .cta-title {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+            
+            .hero-text {
+                margin: 0 auto;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .hero-image {
+                margin: 0 auto;
+                max-width: 500px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 7rem 0;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2.75rem;
+            }
+            
+            .cta-title {
+                font-size: 2.75rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.15rem;
+            }
+            
+            .section-title {
+                font-size: 2.25rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1.15rem;
+            }
+            
+            .cta-title {
+                font-size: 2.25rem;
+            }
+            
+            .cta-description {
+                font-size: 1.15rem;
+            }
+            
+            .btn {
+                padding: 0.9rem 1.75rem;
+                font-size: 0.95rem;
+            }
+            
+            .service-card {
+                padding: 2rem;
+            }
+            
+            .service-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .service-title {
+                font-size: 1.5rem;
+            }
+        }
+
+
+        /* Секция медиа-контента */
+.media-content {
+    background-color: var(--cosmic-purple);
+    position: relative;
+    padding: 8rem 0;
+    overflow: hidden;
+}
+
+.media-content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5rem;
+}
+
+.media-list {
+    flex: 1;
+}
+
+.media-visual {
+    flex: 1;
+    position: relative;
+    min-height: 400px;
+}
+
+.media-items {
+    list-style: none;
+    margin-top: 3rem;
+}
+
+.media-item {
+    display: flex;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.media-item:last-child {
+    border-bottom: none;
+}
+
+.media-item:hover {
+    transform: translateX(10px);
+}
+
+.media-item-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 240, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: var(--neon-cyan);
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.media-item:hover .media-item-icon {
+    background: var(--neon-cyan);
+    color: var(--void-black);
+    transform: scale(1.1);
+}
+
+.media-item-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.media-item-description {
+    color: var(--comet-tail);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+.media-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.media-image {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.3));
+}
+
+.media-image.floating {
+    animation: float 6s ease-in-out infinite;
+}
+
+.media-image.delay-1 {
+    animation-delay: 1s;
+    top: 20%;
+    left: 30%;
+}
+
+.media-image.delay-2 {
+    animation-delay: 2s;
+    top: 60%;
+    left: 50%;
+}
+
+.media-image:first-child {
+    top: 10%;
+    left: 10%;
+    width: 180px;
+    height: 180px;
+}
+
+/* Анимация плавания */
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+    .media-content-wrapper {
+        flex-direction: column;
+        gap: 3rem;
+    }
+    
+    .media-visual {
+        min-height: 300px;
+        width: 100%;
+    }
+    
+    .media-image {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .media-image:first-child {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 576px) {
+    .media-item {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .media-item-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .media-item-title {
+        font-size: 1.3rem;
+    }
+}
+
+
+
+/* Этапы работы */
+.work-steps {
+    max-width: 800px;
+    margin: 3rem auto 4rem;
+    position: relative;
+}
+
+.work-steps::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: rgba(0, 240, 255, 0.2);
+    z-index: 1;
+}
+
+.step {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    z-index: 2;
+}
+
+.step.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+    transition: all 0.4s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.step.active .step-number {
+    background: var(--gradient-main);
+    color: var(--void-black);
+    box-shadow: 0 0 0 8px rgba(0, 240, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.step-content {
+    padding-top: 10px;
+}
+
+.step-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: white;
+    transition: all 0.4s ease;
+}
+
+.step.active .step-title {
+    color: white;
+}
+
+.step-description {
+    color: var(--comet-tail);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+/* Анимация появления шагов */
+@keyframes stepPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+    50% { box-shadow: 0 0 0 12px rgba(0, 240, 255, 0); }
+}
+
+.step.active .step-number::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    animation: stepPulse 2s infinite;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .work-steps::before {
+        left: 25px;
+    }
+    
+    .step {
+        gap: 1rem;
+    }
+    
+    .step-number {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+    
+    .step-title {
+        font-size: 1.1rem;
+    }
+    
+    .step-description {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* Стили для sticky-секции с изображением */
+.services-sticky-container {
+    display: flex;
+    gap: 4rem;
+    position: relative;
+    margin-top: 4rem;
+}
+
+.services-sticky-image {
+    position: sticky;
+    top: 120px; /* Отступ от верха при залипании */
+    height: calc(100vh - 140px);
+    width: 50%;
+    flex-shrink: 0;
+    align-self: flex-start;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+.services-sticky-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(1.1) contrast(1.1);
+}
+
+.services-scroll-content {
+    width: 50%;
+    padding-right: 2rem;
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+    .services-sticky-container {
+        flex-direction: column;
+    }
+    
+    .services-sticky-image {
+        position: relative;
+        top: auto;
+        height: 400px;
+        width: 100%;
+        margin-bottom: 3rem;
+    }
+    
+    .services-scroll-content {
+        width: 100%;
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .services-sticky-image {
+        height: 300px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <!-- <div class="logo-icon">
+                    <i class="fas fa-atom"></i>
+                </div> -->
+                <span>Systemica</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#services" class="nav-link" style="color: white;">Услуги</a></li>
+                    <li><a href="#portfolio" class="nav-link" style="color: white;">Портфолио</a></li>
+                    <li><a href="#a" class="nav-link" style="color: white;">О нас</a></li>
+                    <li><a href="#contact" class="nav-link" style="color: white;">Контакты</a></li>
+                </ul>
+            </nav>
+            <a href="#contact" class="btn btn-primary" style="color: white;">Обсудить проект</a>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Герой секция -->
+    <section class="hero">
+        <div class="particles" id="hero-particles"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text" data-aos="fade-right">
+                     <h2 style="font-family: 'DM Sans', sans-serif; font-size: 3.5rem; font-weight: 700; margin: 0; line-height: 1.2;">Упаковываем и автоматизируем бизнес через Telegram и web</h2>
+                    <br>
+                     <p class="hero-subtitle">Mini-приложения, AI-боты, сайты, автоматизация.
+Systemica — когда не просто красиво, а работает!</p>
+                    <div class="hero-buttons">
+                        <a href="#portfolio" class="btn btn-primary" style="color: white;">Наши работы</a>
+                        <a href="#services" class="btn btn-secondary">
+                            <span>Наши услуги</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image" data-aos="fade-left">
+                    <div class="hero-glow"></div>
+                    <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="IT решения" class="hero-main-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <!-- Секция услуг -->
+  <!-- Секция медиа-контента -->
+<section class="media-content" style="background: #000000; margin-top: -5%;">
+    <div class="particles"></div>
+    <div class="container">
+        <div class="media-content-wrapper">
+            
+            <div class="media-list" data-aos="fade-right">
+                <h2 style="font-family: 'DM Sans', sans-serif; font-size: 4rem; font-weight: 700; margin: 0; line-height: 1.2;">Цифровая система роста</h2>
+                <br>
+                <p class="section-subtitle">Мы соединяем технологии, визуал и маркетинг, чтобы ваш бизнес рос как система — от первого касания до повторных продаж. 
+</p>
+                <div class="section-header"></div>
+                
+                <ul class="media-items">
+                    <!-- Пункт 1 -->
+                    <li class="media-item">
+                        <div class="media-item-icon">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <div class="media-item-content">
+                            <h3 class="media-item-title"> Mini-приложения в Telegram</h3>
+                            <p class="media-item-description">каталоги, калькуляторы, CRM, формы, опросы, игры.</p>
+                        </div>
+                    </li>
+                    
+                    <!-- Пункт 2 -->
+                    <li class="media-item">
+                        <div class="media-item-icon">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                        <div class="media-item-content">
+                            <h3 class="media-item-title">Сайты и PWA</h3>
+                            <p class="media-item-description">лендинги, одностраничники, web-app без App Store.</p>
+                        </div>
+                    </li>
+                    
+                    <!-- Пункт 3 -->
+                    <li class="media-item">
+                        <div class="media-item-icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="media-item-content">
+                            <h3 class="media-item-title">Telegram-боты с AI</h3>
+                            <p class="media-item-description">чат, кнопки, воронки, рассылки</p>
+                        </div>
+                    </li>
+
+                    <li class="media-item">
+                        <div class="media-item-icon">
+                           <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="media-item-content">
+                            <h3 class="media-item-title">AI-ассистенты под задачи бизнеса</h3>
+                            <p class="media-item-description">рассылки, интеграции, бэкенд-процессы.</p>
+                        </div>
+                    </li>
+
+                     <li class="media-item">
+                        <div class="media-item-icon">
+                          <i class="fa-solid fa-paintbrush"></i>
+                        </div>
+                        <div class="media-item-content">
+                            <h3 class="media-item-title">Дизайн для соцсетей</h3>
+                            <p class="media-item-description">логотип, обложка, макеты для постов и сторис.</p>
+                        </div>
+                    </li>
+                     <li class="media-item">
+                        <div class="media-item-icon">
+                           <i class="fa-brands fa-telegram"></i>
+                        </div>
+                        <div class="media-item-content">
+                            <h3 class="media-item-title">Telegram Ads</h3>
+                            <p class="media-item-description">настройка рекламы в TG: воронки, офферы, запуск и аналитика.</p>
+                        </div>
+                    </li>
+                     <li class="media-item">
+                        <div class="media-item-icon">
+                           <i class="fa-solid fa-magnifying-glass-chart"></i>
+                        </div>
+                        <div class="media-item-content">
+                            <h3 class="media-item-title">Маркетинговая стратегия</h3>
+                            <p class="media-item-description">выстраиваем путь от первого касания до покупки, с цифрами и смыслами.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="media-visual" data-aos="fade-left" style="margin-top: 20%;">
+                <div class="media-image-wrapper">
+                    <img 
+                        src="https://docs.ton.org/img/docs/telegram-apps/tapps.png" 
+                        alt="Цифровой аватар" 
+                        class="media-image floating" 
+                        style="filter: drop-shadow(0 0 30px #0055FE) drop-shadow(0 0 6px #0055FE);"
+                    >
+                    <img 
+                        src="https://images.icon-icons.com/4048/PNG/512/telegram_logo_icon_257011.png" 
+                        alt="Статьи" 
+                        class="media-image floating delay-1" 
+                        style="filter: drop-shadow(0 0 30px #0055FE) drop-shadow(0 0 20px #0055FE);"
+                    >
+                    <img 
+                        src="https://cdn3d.iconscout.com/3d/free/thumb/free-meta-3d-icon-download-in-png-blend-fbx-gltf-file-formats--twitter-logo-social-media-pack-logos-icons-7516842.png?f=webp" 
+                        alt="Соцсети" 
+                        class="media-image floating delay-2" 
+                        style="filter: drop-shadow(0 0 30px #0055FE) ;"
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.to(".media-image-wrapper", {
+            y: 200,
+            scrollTrigger: {
+                trigger: ".media-content",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1
+            }
+        });
+    });
+</script>
+</section>
+
+
+<!-- Секция контента и медиа -->
+<section class="media-section" id="mediaSection" style="margin-top: -4%;">
+    <div class="container">
+        <h2 class="media-section-title" style="font-family: 'DM Sans', sans-serif; color: #e0f0ff; ">Контент & Медиа</h2>
+        
+        <div class="media-section-content">
+            <div class="media-visual">
+                <div class="main-media-item">
+                    <img src="https://wizeclub.education/wp-content/uploads/2023/10/Hto_takij_kontent_mejker_ta_yak_opanuvati_profesiyu.png" alt="Контент продакшн" >
+                </div>
+                <div class="floating-media-item" style="top: 15%; left: 10%;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" alt="Instagram">
+                </div>
+                <div class="floating-media-item" style="top: 75%; left: 15%;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Telegram_2019_Logo.svg/1200px-Telegram_2019_Logo.svg.png" alt="Яндекс Дзен">
+                </div>
+                <div class="floating-media-item" style="top: 25%; right: 30%;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/VK_Compact_Logo_%282021-present%29.svg/1200px-VK_Compact_Logo_%282021-present%29.svg.png" alt="VK">
+                </div>
+                 <div class="floating-media-item" style="top: 55%; left: 45%;">
+                    <img src="https://play-lh.googleusercontent.com/sZf6lhxQ4P_6T5XbFDd5m_5vuxINYiuSMT8_szjmA7lAvuUP_ezk_yXFopLTF-jZZg" alt="Instagram">
+                </div>
+            </div>
+            
+            <div class="media-text-content">
+                <h3>Экспертный контент для продвижения</h3>
+                <p>Создаем качественный контент, который работает на ваш бренд и привлекает целевую аудиторию.</p>
+                
+                <div class="media-feature">
+                    <h4><i class="fas fa-video"></i> Reels с цифровым аватаром</h4>
+                    <p>Видеоконтент с AI-аватаром для соцсетей с индивидуальным сценарием и озвучкой.</p>
+                </div>
+                
+                <div class="media-feature">
+                    <h4><i class="fas fa-newspaper"></i> Статьи на VC.ru и Яндекс Дзен</h4>
+                    <p>Экспертные публикации с аналитикой и кейсами для привлечения профессиональной аудитории.</p>
+                </div>
+                
+                <div class="media-feature">
+                    <h4><i class="fas fa-photo-film"></i> Контент для соцсетей</h4>
+                    <p>Полный цикл создания контента: от стратегии до публикации и анализа эффективности.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* MEDIA SECTION STYLES */
+.media-section {
+    background: #000000;
+    padding: 100px 0;
+    color: #e0f2ff;
+    position: relative;
+    overflow: hidden;
+}
+
+.media-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="rgba(255,255,255,0.03)" d="M0,0 L100,0 L100,100 L0,100 Z"/></svg>');
+    background-size: 30px 30px;
+    opacity: 0.5;
+}
+
+.media-section-title {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 60px;
+    background: #e0f0ff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 15px rgba(58, 123, 213, 0.3);
+}
+
+.media-section-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.media-visual {
+    flex: 1;
+    position: relative;
+    min-height: 400px;
+}
+
+.main-media-item {
+    width: 350px;
+    height: 350px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px #0055FE;
+    border: 3px solid rgba(58, 123, 213, 0.7);
+    position: relative;
+    z-index: 1;
+    /* Добавляем анимацию свечения */
+    animation: glow 3s infinite alternate;
+}
+
+
+@keyframes glow {
+    from {
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+                    0 0 0 15px rgba(58, 123, 213, 0.1),
+                    0 0 0 30px rgba(58, 123, 213, 0.05);
+    }
+    to {
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+                    0 0 0 15px rgba(58, 123, 213, 0.2),
+                    0 0 0 30px rgba(58, 123, 213, 0.1),
+                    0 0 30px 40px rgba(58, 123, 213, 0.05);
+    }
+}
+
+.main-media-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9);
+}
+
+.floating-media-item {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transform: translateY(30px);
+    opacity: 0;
+    animation: floatIn 0.8s forwards, floating 15s infinite linear;
+    transition: all 0.3s;
+    z-index: 2;
+}
+
+.floating-media-item img {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+}
+
+.floating-media-item:hover {
+    transform: scale(1.2) !important;
+    z-index: 3;
+    box-shadow: 0 0 30px rgba(58, 123, 213, 0.7);
+}
+
+.media-text-content {
+    flex: 1;
+    max-width: 500px;
+}
+
+.media-text-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    color: white;
+    position: relative;
+}
+
+.media-text-content h3::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: #0055FE;
+}
+
+.media-text-content > p {
+    color: rgba(224, 242, 255, 0.8);
+    margin-bottom: 30px;
+    line-height: 1.7;
+    font-size: 1.1rem;
+}
+
+.media-feature {
+    margin-bottom: 25px;
+    opacity: 0;
+    transform: translateX(20px);
+    animation: fadeInRight 0.6s forwards;
+}
+
+.media-feature h4 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.media-feature i {
+    margin-right: 12px;
+    color: #0055FE;
+    font-size: 1.2rem;
+}
+
+.media-feature p {
+    color: rgba(224, 242, 255, 0.7);
+    line-height: 1.7;
+    padding-left: 32px;
+}
+
+@keyframes floatIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floating {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(10px, -15px) rotate(3deg); }
+    50% { transform: translate(5px, -25px) rotate(6deg); }
+    75% { transform: translate(-10px, -15px) rotate(3deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes fadeInRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Анимации для элементов */
+.media-feature:nth-child(1) { animation-delay: 0.3s; }
+.media-feature:nth-child(2) { animation-delay: 0.6s; }
+.media-feature:nth-child(3) { animation-delay: 0.9s; }
+
+/* Адаптивность */
+@media (max-width: 992px) {
+    .media-section-content {
+        flex-direction: column;
+    }
+    
+    .media-visual {
+        margin-bottom: 50px;
+    }
+    
+    .media-text-content {
+        max-width: 100%;
+    }
+    
+    .main-media-item {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 576px) {
+    .media-section {
+        padding: 70px 0;
+    }
+    
+    .media-section-title {
+        font-size: 2.2rem;
+        margin-bottom: 40px;
+    }
+    
+    .floating-media-item {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .media-text-content h3 {
+        font-size: 1.5rem;
+    }
+    
+    .media-feature h4 {
+        font-size: 1.1rem;
+    }
+    
+    .media-feature p {
+        font-size: 0.95rem;
+    }
+}
+</style>
+
+<script>
+// Анимация для медиа секции
+document.addEventListener('DOMContentLoaded', function() {
+    // Анимация плавающих элементов
+    const floatingItems = document.querySelectorAll('.floating-media-item');
+    floatingItems.forEach((item, index) => {
+        const delay = index * 0.2;
+        item.style.animationDelay = `${delay}s, ${delay}s`;
+        
+        // Случайное смещение анимации
+        const duration = 15 + Math.random() * 10;
+        item.style.animationDuration = `0.8s, ${duration}s`;
+    });
+    
+    // Анимация текстовых блоков при скролле
+    const mediaFeatures = document.querySelectorAll('.media-feature');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateX(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    mediaFeatures.forEach(feature => observer.observe(feature));
+});
+</script>
+
+
+<!-- Секция "Почему мы?" -->
+<!-- Секция "Почему мы?" с анимированным фоном -->
+<section class="why-us" id="why-us" style="background: #000000; margin-top: -5%;">
+    <!-- Анимированный фон -->
+    <div class="animated-background">
+        <div class="light-spot spot-1"></div>
+        <div class="light-spot spot-2"></div>
+        <div class="light-spot spot-3"></div>
+        <div class="light-spot spot-4"></div>
+    </div>
+    
+    <div class="particles"></div>
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 style="font-family: 'DM Sans', sans-serif; font-size: 3rem; font-weight: 700; margin: 0; line-height: 1.2;">Почему Systemica?</h2>
+            <br>
+            <p class="section-subtitle">Наш подход — это не просто разработка, а создание работающих систем для вашего бизнеса</p>
+        </div>
+
+        <div class="reasons-grid">
+            <!-- Причина 1 -->
+            <div class="reason-card" data-aos="fade-up">
+                <div class="reason-icon" style="background: rgba(0, 85, 254, 0.1);">
+                    <i class="fab fa-telegram" style="color: #0055FE;"></i>
+                    <div class="icon-glow" style="background: rgba(0, 85, 254, 0.3);"></div>
+                </div>
+                <h3 class="reason-title">Telegram — наша специализация</h3>
+                <p class="reason-description">Глубокие знания Telegram API, Mini Apps и ботов. Делаем не просто ботов, а полноценные бизнес-решения внутри мессенджера.</p>
+            </div>
+
+            <!-- Причина 2 -->
+            <div class="reason-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="reason-icon" style="background: rgba(0, 204, 204, 0.1);">
+                    <i class="fas fa-cogs" style="color: #00cccc;"></i>
+                    <div class="icon-glow" style="background: rgba(0, 204, 204, 0.3);"></div>
+                </div>
+                <h3 class="reason-title">Не "картинка", а рабочая система</h3>
+                <p class="reason-description">Мы создаем не просто визуал, а продуманные системы автоматизации, которые экономят ваше время и увеличивают прибыль.</p>
+            </div>
+
+            <!-- Причина 3 -->
+            <div class="reason-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="reason-icon" style="background: rgba(255, 102, 0, 0.1);">
+                    <i class="fas fa-robot" style="color: #ff6600;"></i>
+                    <div class="icon-glow" style="background: rgba(255, 102, 0, 0.3);"></div>
+                </div>
+                <h3 class="reason-title">AI + автоматизация + mini-apps</h3>
+                <p class="reason-description">Используем современные технологии: искусственный интеллект, автоматизацию процессов и мини-приложения для комплексных решений.</p>
+            </div>
+
+            <!-- Причина 4 -->
+            <div class="reason-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="reason-icon" style="background: rgba(102, 204, 0, 0.1);">
+                    <i class="fas fa-clock" style="color: #66cc00;"></i>
+                    <div class="icon-glow" style="background: rgba(102, 204, 0, 0.3);"></div>
+                </div>
+                <h3 class="reason-title">Честные сроки, живая коммуникация</h3>
+                <p class="reason-description">Не обещаем невозможного. Работаем по четкому плану с регулярными отчетами. Всегда на связи в Telegram.</p>
+            </div>
+
+            <!-- Причина 5 -->
+            <div class="reason-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="reason-icon" style="background: rgba(204, 0, 204, 0.1);">
+                    <i class="fas fa-bullseye" style="color: #cc00cc;"></i>
+                    <div class="icon-glow" style="background: rgba(204, 0, 204, 0.3);"></div>
+                </div>
+                <h3 class="reason-title">Всё по делу, без "воды"</h3>
+                <p class="reason-description">Никакого маркетинга ради маркетинга. Только конкретные решения, которые работают на ваш бизнес.</p>
+            </div>
+
+            <!-- Причина 6 -->
+            <div class="reason-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="reason-icon" style="background: rgba(255, 204, 0, 0.1);">
+                    <i class="fas fa-hands-helping" style="color: #ffcc00;"></i>
+                    <div class="icon-glow" style="background: rgba(255, 204, 0, 0.3);"></div>
+                </div>
+                <h3 class="reason-title">Поддержка после запуска</h3>
+                <p class="reason-description">Не бросаем после сдачи проекта. Помогаем с доработками, обучаем вашу команду и сопровождаем систему.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Стили для секции "Почему мы?" */
+.why-us {
+    position: relative;
+    padding: 8rem 0;
+    background: #000 !important;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Анимированный фон */
+.animated-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.light-spot {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.15;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.spot-1 {
+    width: 300px;
+    height: 300px;
+    background: #0055FE;
+    top: 10%;
+    left: 5%;
+    animation-name: float-1;
+}
+
+.spot-2 {
+    width: 400px;
+    height: 400px;
+    background: #00cccc;
+    top: 60%;
+    left: 70%;
+    animation-name: float-2;
+    animation-delay: 3s;
+}
+
+.spot-3 {
+    width: 250px;
+    height: 250px;
+    background: #ff6600;
+    top: 30%;
+    left: 50%;
+    animation-name: float-3;
+    animation-delay: 7s;
+}
+
+.spot-4 {
+    width: 350px;
+    height: 350px;
+    background: #cc00cc;
+    top: 70%;
+    left: 20%;
+    animation-name: float-4;
+    animation-delay: 5s;
+}
+
+@keyframes float-1 {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(20px, 40px); }
+    50% { transform: translate(40px, 0); }
+    75% { transform: translate(20px, -40px); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes float-2 {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(-30px, -20px); }
+    50% { transform: translate(-60px, 0); }
+    75% { transform: translate(-30px, 20px); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes float-3 {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(15px, -25px); }
+    50% { transform: translate(30px, 0); }
+    75% { transform: translate(15px, 25px); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes float-4 {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(-20px, 30px); }
+    50% { transform: translate(-40px, 0); }
+    75% { transform: translate(-20px, -30px); }
+    100% { transform: translate(0, 0); }
+}
+
+/* Сетка причин */
+.reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+    margin-top: 5rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Карточка причины */
+.reason-card {
+    background: linear-gradient(145deg, #0e0e25, #0a0a1a);
+    border-radius: 20px;
+    padding: 3rem;
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border: 1px solid rgba(0, 85, 254, 0.1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.reason-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 85, 254, 0.2);
+    border-color: #0055FE;
+}
+
+.reason-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #0055FE, #003366);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+}
+
+.reason-card:hover::after {
+    transform: scaleX(1);
+}
+
+/* Иконка причины */
+.reason-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.icon-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.reason-card:hover .icon-glow {
+    opacity: 1;
+}
+
+/* Текст причины */
+.reason-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: white;
+    line-height: 1.3;
+}
+
+.reason-description {
+    color: #a0c8ff;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+/* Анимация иконок */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.reason-card:hover .reason-icon i {
+    animation: pulse 2s infinite;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .reasons-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .why-us {
+        padding: 6rem 0;
+    }
+    
+    .reason-card {
+        padding: 2rem;
+    }
+    
+    .reason-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+    
+    .reason-title {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .reasons-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .reason-description {
+        font-size: 1rem;
+    }
+    
+    .section-header h2 {
+        font-size: 2.5rem;
+    }
+}
+</style>
+
+<script>
+// Дополнительная анимация для фона
+document.addEventListener('DOMContentLoaded', function() {
+    // Динамическое создание дополнительных световых пятен
+    const background = document.querySelector('.animated-background');
+    const colors = ['#0055FE', '#00cccc', '#ff6600', '#cc00cc', '#ffcc00'];
+    
+    // Создаем 3 дополнительных пятна
+    for (let i = 0; i < 3; i++) {
+        const spot = document.createElement('div');
+        spot.className = 'light-spot dynamic-spot';
+        
+        // Случайные параметры
+        const size = Math.random() * 200 + 100;
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const duration = Math.random() * 20 + 10;
+        const delay = Math.random() * 5;
+        
+        // Применяем стили
+        spot.style.width = `${size}px`;
+        spot.style.height = `${size}px`;
+        spot.style.background = color;
+        spot.style.top = `${posY}%`;
+        spot.style.left = `${posX}%`;
+        spot.style.animationDuration = `${duration}s`;
+        spot.style.animationDelay = `${delay}s`;
+        spot.style.opacity = '0.1';
+        spot.style.filter = 'blur(50px)';
+        
+        // Случайная анимация движения
+        const animName = `float-dynamic-${i}`;
+        const keyframes = `
+            @keyframes ${animName} {
+                0% { transform: translate(0, 0); }
+                25% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px); }
+                50% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px); }
+                75% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px); }
+                100% { transform: translate(0, 0); }
+            }
+        `;
+        
+        // Добавляем анимацию в документ
+        const style = document.createElement('style');
+        style.innerHTML = keyframes;
+        document.head.appendChild(style);
+        
+        spot.style.animationName = animName;
+        
+        // Добавляем пятно на фон
+        background.appendChild(spot);
+    }
+    
+    // Анимация карточек при наведении
+    const reasonCards = document.querySelectorAll('.reason-card');
+    
+    reasonCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            const icon = this.querySelector('.reason-icon i');
+            icon.style.animation = 'pulse 2s infinite';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            const icon = this.querySelector('.reason-icon i');
+            icon.style.animation = '';
+        });
+    });
+});
+</script>
+
+
+<section class="cta">
+    <div class="particles"></div>
+    <div class="container">
+        <div class="cta-content" data-aos="zoom-in">
+           <h2 style="font-family: 'DM Sans', sans-serif; font-size: 4rem; font-weight: 700; margin: 0; line-height: 1.2;">Готовы к цифровой трансформации?</h2>
+           <br>
+            <p class="cta-description">Мы сопровождаем вас на каждом этапе — от первой консультации до реализации</p>
+            
+            <!-- Этапы работы -->
+            <div class="work-steps">
+                <div class="step" data-step="1" style="color: white;">
+                    <div class="step-number" style="color: white;">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Оставляете заявку</h3>
+                        <p class="step-description">Через форму на сайте или по телефону</p>
+                    </div>
+                </div>
+                
+                <div class="step" data-step="2">
+                    <div class="step-number"  style="color: white;">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Созваниваемся или переписываемся</h3>
+                        <p class="step-description">Уточняем детали и отвечаем на вопросы</p>
+                    </div>
+                </div>
+                
+                <div class="step" data-step="3">
+                    <div class="step-number"  style="color: white;">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Погружаемся в задачу</h3>
+                        <p class="step-description">Анализируем и предлагаем решение</p>
+                    </div>
+                </div>
+                
+                <div class="step" data-step="4">
+                    <div class="step-number"  style="color: white;">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Реализуем проект</h3>
+                        <p class="step-description">Упаковка / бот / автоматизация</p>
+                    </div>
+                </div>
+                
+                <div class="step" data-step="5">
+                    <div class="step-number"  style="color: white;">5</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Подключаем и тестируем</h3>
+                        <p class="step-description">Обучаем вашу команду работе с системой</p>
+                    </div>
+                </div>
+                
+                <div class="step" data-step="6">
+                    <div class="step-number"  style="color: white;">6</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Ведём или масштабируем</h3>
+                        <p class="step-description">При необходимости развиваем проект</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary"  style="color: white;">Оставить заявку</a>
+                <a href="tel:+79991234567" class="btn btn-secondary">
+                    <!-- <i class="fas fa-phone-alt"></i> -->
+                    <span>Написать в Telegram</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+ /* Этапы работы */
+.work-steps {
+    max-width: 800px;
+    margin: 3rem auto 4rem;
+    position: relative;
+    text-align: left; /* Добавлено для выравнивания по левому краю */
+}
+
+.work-steps::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: rgba(0, 240, 255, 0.2);
+    z-index: 1;
+}
+
+.step {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    z-index: 2;
+}
+
+.step.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: white; /* Белый фон круга */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0055FE !important; /* Синий цвет цифры */
+    flex-shrink: 0;
+    transition: all 0.4s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.step.active .step-number {
+    box-shadow: 0 0 0 8px rgba(0, 240, 255, 0.2);
+    transform: scale(1.1);
+    background: white; /* Оставляем белый фон активного круга */
+    color: #0055FE !important; /* Оставляем синий цвет цифры */
+}
+
+.step-content {
+    padding-top: 10px;
+}
+
+.step-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: white;
+    transition: all 0.4s ease;
+}
+
+.step.active .step-title {
+    color: white;
+}
+
+.step-description {
+    color: var(--comet-tail);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+/* Анимация появления шагов */
+@keyframes stepPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+    50% { box-shadow: 0 0 0 12px rgba(0, 240, 255, 0); }
+}
+
+.step.active .step-number::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    animation: stepPulse 2s infinite;
+    border: 2px solid #0055FE; /* Синяя пульсирующая граница */
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .work-steps::before {
+        left: 25px;
+    }
+    
+    .step {
+        gap: 1rem;
+    }
+    
+    .step-number {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+    
+    .step-title {
+        font-size: 1.1rem;
+    }
+    
+    .step-description {
+        font-size: 0.9rem;
+    }
+}
+</style>
+
+    <!-- Секция портфолио -->
+    <section class="portfolio" id="portfolio" style="margin-top: 8%;">
+        <div class="particles"></div>
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <br>
+                <h2 style="font-family: 'DM Sans', sans-serif; font-size: 3rem; font-weight: 700; margin: 0; line-height: 1.2;">Наши проекты</h2>
+                <br>
+                <p class="section-subtitle">Реализованные кейсы, которые демонстрируют наш подход и экспертизу</p>
+            </div>
+            <div class="portfolio-slider">
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide portfolio-slide" data-aos="flip-up">
+                            <div class="portfolio-image">
+                                <img src="https://img.freepik.com/free-photo/3d-cryptocurrency-rendering-design_23-2149074564.jpg?semt=ais_hybrid&w=740" alt="Корпоративный портал">
+                                <div class="portfolio-overlay">
+                                    <a href="#" class="btn btn-primary"  style="color: white;">Смотреть кейс</a>
+                                </div>
+                            </div>
+                            <div class="portfolio-info">
+                                <span class="portfolio-category">Веб-разработка</span>
+                                <h3 class="portfolio-title">Корпоративный сайт</h3>
+                                <p class="portfolio-description">Сайт для майнинговой компании CryptoDesk.</p>
+                                <div class="portfolio-tags">
+                                    <span class="portfolio-tag">React</span>
+                                    <span class="portfolio-tag">Node.js</span>
+                                    <span class="portfolio-tag">Языки разметки</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide portfolio-slide" data-aos="flip-up" data-aos-delay="100">
+                            <div class="portfolio-image">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8dv6q_bSdi1C9LKGRjy7cqYglVpiqeCmmyA&s" alt="Мобильное приложение">
+                                <div class="portfolio-overlay">
+                                    <a href="#" class="btn btn-primary"  style="color: white;">Смотреть кейс</a>
+                                </div>
+                            </div>
+                            <div class="portfolio-info">
+                                <span class="portfolio-category">Мобильная разработка</span>
+                                <h3 class="portfolio-title">SaveMobile</h3>
+                                <p class="portfolio-description">Приложение для подбора защитных стекл на устройства.</p>
+                                <div class="portfolio-tags">
+                                    <span class="portfolio-tag">Flutter</span>
+                                    <span class="portfolio-tag">TensorFlow</span>
+                                    <span class="portfolio-tag">Firebase</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide portfolio-slide" data-aos="flip-up" data-aos-delay="200">
+                            <div class="portfolio-image">
+                                <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Платформа eCommerce">
+                                <div class="portfolio-overlay">
+                                    <a href="#" class="btn btn-primary"  style="color: white;">Смотреть кейс</a>
+                                </div>
+                            </div>
+                            <div class="portfolio-info">
+                                <span class="portfolio-category">trading</span>
+                                <h3 class="portfolio-title">ТМА HistoBit</h3>
+                                <p class="portfolio-description">Телеграм приложение с возможностью отслеживать лучший процент стейкинга на разных биржах.</p>
+                                <div class="portfolio-tags">
+                                    <span class="portfolio-tag">Vue.js</span>
+                                    <span class="portfolio-tag">Laravel</span>
+                                    <span class="portfolio-tag">Kubernetes</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide portfolio-slide" data-aos="flip-up" data-aos-delay="300">
+                            <div class="portfolio-image">
+                                <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Аналитика данных">
+                                <div class="portfolio-overlay">
+                                    <a href="#" class="btn btn-primary"  style="color: white;">Смотреть кейс</a>
+                                </div>
+                            </div>
+                            <div class="portfolio-info">
+                                <span class="portfolio-category">Big Data</span>
+                                <h3 class="portfolio-title">Система аналитики SaveX</h3>
+                                <p class="portfolio-description">CRM система для малого и среднего бизнеса с аналитикой по продажам и конверсии.</p>
+                                <div class="portfolio-tags">
+                                    <span class="portfolio-tag">Apache Spark</span>
+                                    <span class="portfolio-tag">Kafka</span>
+                                    <span class="portfolio-tag">React</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <!-- Секция о нас -->
+<section class="about" id="about" style="background: #000000;">
+    <div class="particles"></div>
+    <div class="container">
+        <div class="about-content">
+            <div class="about-image" data-aos="fade-right">
+                <div class="image-wrapper">
+                    <img 
+                        src="5402420168438705653.jpg" 
+                        alt="Основатель Systemica" 
+                        class="founder-image floating"
+                        style="filter: drop-shadow(0 0 50px #0055FE) "
+                    >
+                    <div class="image-glow"></div>
+                </div>
+            </div>
+            
+            <div class="about-text" data-aos="fade-left">
+                <div class="section-header">
+                    <h2 style="font-family: 'DM Sans', sans-serif; font-size: 3rem; font-weight: 700; margin: 0; line-height: 1.2;">Кто за этим стоит?</h2>
+                </div>
+                
+                <div class="about-description">
+                    <p>Я — Артём, основатель Systemica. Создал этот проект, потому что устал от “картинки ради картинки”. Мы не просто делаем красиво — мы выстраиваем систему: от упаковки до автоматизации, которая работает и приносит результат.</p>
+                    
+                    <p>Основной фокус на:</p>
+                    
+                    <ul class="about-features">
+                        <li><i class="fas fa-check-circle"></i> Telegram </li>
+                        <li><i class="fas fa-check-circle"></i> AI </li>
+                        <li><i class="fas fa-check-circle"></i> Автоматизация</li>
+                        <li><i class="fas fa-check-circle"></i> Стратегия и упаковка </li>
+                    </ul>
+                    
+                    <p>Честно. Технологично. По делу.</p>
+                    
+                    <div class="about-cta">
+                        <a href="#contact" class="btn btn-primary" style="color: white;">Обсудить проект</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</style>
+
+<style>
+/* Общие стили */
+.about {
+    background-color: #000000;
+    position: relative;
+    overflow: hidden;
+    padding: 8rem 0;
+}
+
+.about-content {
+    display: flex;
+    align-items: center;
+    gap: 5rem;
+}
+
+.about-text {
+    flex: 1;
+}
+
+.about-image {
+    flex: 1;
+    position: relative;
+}
+
+.image-wrapper {
+    position: relative;
+    border-radius: 20px;
+    overflow: visible; /* Изменили на visible чтобы тени были видны */
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    background: transparent;
+}
+
+.founder-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+    position: relative;
+    z-index: 2;
+    transform: translateY(0);
+}
+
+/* Анимация плавающего эффекта */
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+.floating {
+    animation: floating 6s ease-in-out infinite;
+}
+
+.image-glow {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background: radial-gradient(circle, rgba(0, 85, 254, 0.3) 0%, transparent 70%);
+    z-index: 1;
+    pointer-events: none;
+    border-radius: 30px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.image-wrapper:hover .image-glow {
+    opacity: 1;
+}
+
+/* Остальные стили остаются без изменений */
+.about-description {
+    margin-top: 2rem;
+}
+
+.about-description p {
+    color: #a0a0a0;
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+    font-size: 1.1rem;
+}
+
+.about-features {
+    list-style: none;
+    margin: 2rem 0;
+}
+
+.about-features li {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: white;
+    font-weight: 300;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.about-features li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: #0055FE;
+    border-radius: 50%;
+}
+
+.about-cta {
+    margin-top: 3rem;
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+    .about-content {
+        flex-direction: column;
+        gap: 3rem;
+    }
+    
+    .about-image {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .about {
+        padding: 6rem 0;
+    }
+    
+    .founder-image {
+        filter: drop-shadow(0 0 20px #0055FE) drop-shadow(0 0 5px #0055FE) !important;
+    }
+    
+    .about-features li {
+        font-size: 0.95rem;
+    }
+}
+</style>
+
+    <!-- CTA секция -->
+    <!-- CTA секция -->
+
+
+
+
+    <!-- Секция отзывов -->
+<section class="testimonials" style="background: #000000;">
+    <div class="particles"></div>
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 style="font-family: 'DM Sans', sans-serif; font-size: 3rem; font-weight: 700; margin: 0; line-height: 1.2;">Отзывы клиентов</h2>
+            <br>
+            <p class="section-subtitle">Что говорят о нашей работе те, кто уже воспользовался нашими услугами</p>
+        </div>
+
+        <div class="testimonials-slider" style="margin-top: -7%;">
+            <div class="swiper testimonials-swiper">
+                <div class="swiper-wrapper">
+                    <!-- Отзыв 1 -->
+                    <div class="swiper-slide testimonial-slide" data-aos="fade-up">
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <div class="client-avatar">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Алексей Петров">
+                                    <div class="avatar-border"></div>
+                                </div>
+                                <div class="client-info">
+                                    <h4 class="client-name">Вадим Барсуков </h4>
+                                    <p class="client-position">Продажа майнинг оборудования </p>
+                                </div>
+                                <div class="quote-icon">
+                                    <i class="fas fa-quote-right"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                <p>Всё под ключ: от оформления канала до Telegram-бота с AI, от логотипа до сайта, от текстов до рекламы. Артём погружается в проект как партнёр: предлагает идеи, сам внедряет, не тормозит. Благодаря запуску TG Ads и чёткому позиционированию продажи выросли в 3 раза. Сейчас понимаем, что без этой упаковки были бы просто «ещё одним каналом». Теперь — бренд.</p>
+                            </div>
+                            <div class="testimonial-rating" style="color: #fff;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Отзыв 2 -->
+                    <div class="swiper-slide testimonial-slide" data-aos="fade-up" data-aos-delay="100">
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <div class="client-avatar">
+                                    <img src="5402607691005818905.jpg" alt="Екатерина Смирнова">
+                                    <div class="avatar-border"></div>
+                                </div>
+                                <div class="client-info">
+                                    <h4 class="client-name">Евгения Рылова</h4>
+                                    <p class="client-position">основатель Jenny Tours</p>
+                                </div>
+                                <div class="quote-icon">
+                                    <i class="fas fa-quote-right"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                <p>Артём — тот самый человек, с которым можно не бояться «всё отдать». Он не просто сделал нам сайт, а выстроил стратегию — от позиционирования до конверсий. Помог увидеть, как должна работать воронка, как оформляться соцсети, как всё должно быть связано. Очень системно. Очень по делу. Без воды. Сейчас наконец-то чувствуем, что бренд выглядит так, как мы всегда мечтали.</p>
+                            </div>
+                            <div class="testimonial-rating" style="color: #fff;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Отзыв 3 -->
+                    <div class="swiper-slide testimonial-slide" data-aos="fade-up" data-aos-delay="200">
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <div class="client-avatar">
+                                    <img src="https://randomuser.me/api/portraits/men/1c:\Users\user\Downloads\5402607691005818905.jpg7.jpg" alt="Дмитрий Иванов">
+                                    <div class="avatar-border"></div>
+                                </div>
+                                <div class="client-info">
+                                    <h4 class="client-name">Алексей Дробышев</h4>
+                                    <p class="client-position">владелец интернет-магазина электроники</p>
+                                </div>
+                                <div class="quote-icon">
+                                    <i class="fas fa-quote-right"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                <p>Мы думали, что нам нужен просто сайт. Артём показал, как можно сделать web-приложение, которое реально помогает продавать. Каталог, фильтры, корзина — всё в Telegram. Ни одного лишнего экрана. Люди покупают, потому что всё просто. Очень рекомендую, если хотите не “просто красиво”, а с умом.</p>
+                            </div>
+                            <div class="testimonial-rating" style="color: #fff;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Отзыв 4 -->
+                    <div class="swiper-slide testimonial-slide" data-aos="fade-up" data-aos-delay="300">
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <div class="client-avatar">
+                                    <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Ольга Кузнецова">
+                                    <div class="avatar-border"></div>
+                                </div>
+                                <div class="client-info">
+                                    <h4 class="client-name">Ирина Самойлова</h4>
+                                    <p class="client-position">эксперт по онлайн-обучению</p>
+                                </div>
+                                <div class="quote-icon">
+                                    <i class="fas fa-quote-right"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                <p>Я пришла просто за Telegram-ботом, а получила полноценную систему: воронку, оплату, автосообщения, аналитику. Артём задал такие вопросы, о которых я сама даже не думала. И всё сделал быстро, чисто, без лишних движений. Теперь бот работает вместо менеджера и приносит клиентов на автопилоте.</p>
+                            </div>
+                            <div class="testimonial-rating" style="color: #fff;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="swiper-slide testimonial-slide" data-aos="fade-up" data-aos-delay="300">
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <div class="client-avatar">
+                                    <img src="https://randomuser.me/api/portraits/women/29.jpg" alt="Ольга Кузнецова">
+                                    <div class="avatar-border"></div>
+                                </div>
+                                <div class="client-info">
+                                    <h4 class="client-name">Ксения Бекетова</h4>
+                                    <p class="client-position">бренд-коуч и блогер</p>
+                                </div>
+                                <div class="quote-icon">
+                                    <i class="fas fa-quote-right"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                <p>Я сильно парилась с визуалом и текстами. Артём не только сделал классный логотип и обложку для Telegram, но и помог вытащить мой смысл. Всё стало единым: стиль, подача, структура канала. Даже голос стал увереннее — потому что теперь есть база, на которую можно опереться.</p>
+                            </div>
+                            <div class="testimonial-rating" style="color: #fff;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="swiper-slide testimonial-slide" data-aos="fade-up" data-aos-delay="200">
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <div class="client-avatar">
+                                    <img src="https://randomuser.me/api/portraits/men/37.jpg" alt="Дмитрий Иванов">
+                                    <div class="avatar-border"></div>
+                                </div>
+                                <div class="client-info">
+                                    <h4 class="client-name">Владислав Лисицын</h4>
+                                    <p class="client-position">продюсер образовательных проектов</p>
+                                </div>
+                                <div class="quote-icon">
+                                    <i class="fas fa-quote-right"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                <p>С Артёмом ты получаешь не просто исполнителя, а стратега. Он помогает разобраться, что на самом деле мешает расти. Мы выстроили всю маркетинговую воронку: от первого касания до оплаты. Подключили Telegram Ads, бота, визуал, тексты. Результат — плюс 40% заявок уже в первый месяц.</p>
+                            </div>
+                            <div class="testimonial-rating" style="color: #fff;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                     <div class="swiper-slide testimonial-slide" data-aos="fade-up" data-aos-delay="200">
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <div class="client-avatar">
+                                    <img src="https://randomuser.me/api/portraits/men/31.jpg" alt="Дмитрий Иванов">
+                                    <div class="avatar-border"></div>
+                                </div>
+                                <div class="client-info">
+                                    <h4 class="client-name">Тимур Агаев</h4>
+                                    <p class="client-position">основатель техстартапа</p>
+                                </div>
+                                <div class="quote-icon">
+                                    <i class="fas fa-quote-right"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                <p>Мы пришли за AI-ассистентом. Получили не только умного помощника, но и интеграцию с базой, CRM, сценариями — всё внутри Telegram. Команда сэкономила кучу времени на поддержке клиентов. Всё работает стабильно. И главное — можно масштабировать. Очень технологично и понятно.</p>
+                            </div>
+                            <div class="testimonial-rating" style="color: #fff;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="swiper-slide testimonial-slide" data-aos="fade-up" data-aos-delay="300">
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <div class="client-avatar">
+                                    <img src="https://randomuser.me/api/portraits/women/19.jpg" alt="Ольга Кузнецова">
+                                    <div class="avatar-border"></div>
+                                </div>
+                                <div class="client-info">
+                                    <h4 class="client-name">Мария Терещенко</h4>
+                                    <p class="client-position">фандрайзер, работает с некоммерческими проектами</p>
+                                </div>
+                                <div class="quote-icon">
+                                    <i class="fas fa-quote-right"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                <p>Мы долго искали человека, который сможет упаковать проект без пафоса, но со смыслом. Артём сделал Telegram-бота, сайт и визуал так, что всё стало ясно даже тем, кто «не в теме». Плюс помог выстроить простую стратегию коммуникации. Всё чётко, по делу и с душой.
+</p>
+                            </div>
+                            <div class="testimonial-rating" style="color: #fff;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Стили для секции отзывов */
+.testimonials {
+    position: relative;
+    padding: 8rem 0;
+    background: linear-gradient(to bottom, #000000, #0a0a1a);
+}
+
+.testimonials::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="rgba(0,85,254,0.03)" d="M0,0 L100,0 L100,100 L0,100 Z"/></svg>');
+    background-size: 30px 30px;
+    opacity: 0.5;
+}
+
+.testimonials-slider {
+    position: relative;
+    padding: 3rem 0;
+    margin-top: 3rem;
+}
+
+.testimonial-slide {
+    padding: 1rem;
+    height: auto;
+}
+
+.testimonial-card {
+    background: linear-gradient(145deg, #0e0e25, #0a0a1a);
+    border-radius: 20px;
+    padding: 3rem;
+    height: 100%;
+    border: 1px solid rgba(0, 85, 254, 0.2);
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 85, 254, 0.2);
+    border-color: var(--neon-cyan);
+}
+
+.testimonial-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--gradient-main);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+}
+
+.testimonial-card:hover::after {
+    transform: scaleX(1);
+}
+
+.testimonial-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.client-avatar {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    margin-right: 1.5rem;
+    flex-shrink: 0;
+}
+
+.client-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+}
+
+.avatar-border {
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: var(--gradient-main);
+    border-radius: 50%;
+    z-index: 1;
+    animation: rotateBorder 8s linear infinite;
+}
+
+@keyframes rotateBorder {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.client-info {
+    flex: 1;
+}
+
+.client-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.25rem;
+}
+
+.client-position {
+    color: var(--neon-cyan);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.quote-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 85, 254, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--neon-cyan);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.testimonial-content {
+    margin-bottom: 2rem;
+}
+
+.testimonial-content p {
+    color: var(--comet-tail);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    font-weight: 300;
+    position: relative;
+    padding-left: 2rem;
+}
+
+.testimonial-content p::before {
+    content: '“';
+    position: absolute;
+    top: -1rem;
+    left: 0;
+    font-size: 4rem;
+    color: rgba(0, 85, 254, 0.2);
+    font-family: Georgia, serif;
+    line-height: 1;
+}
+
+.testimonial-rating {
+    display: flex;
+    gap: 0.5rem;
+    color: var(--neon-yellow);
+    font-size: 1.2rem;
+}
+
+.swiper-pagination-bullet {
+    background: var(--comet-tail);
+    opacity: 1;
+    width: 12px;
+    height: 12px;
+    transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+    background: var(--neon-cyan);
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(0, 85, 254, 0.5);
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+    .testimonial-card {
+        padding: 2rem;
+    }
+    
+    .client-avatar {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .client-name {
+        font-size: 1.3rem;
+    }
+    
+    .testimonial-content p {
+        font-size: 1rem;
+        padding-left: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .testimonials {
+        padding: 6rem 0;
+    }
+    
+    .testimonial-header {
+        flex-direction: column;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    
+    .client-avatar {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    
+    .quote-icon {
+        margin-top: 1rem;
+    }
+    
+    .testimonial-content p {
+        padding-left: 0;
+        text-align: center;
+    }
+    
+    .testimonial-content p::before {
+        display: none;
+    }
+    
+    .testimonial-rating {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .testimonial-card {
+        padding: 1.5rem;
+    }
+    
+    .client-name {
+        font-size: 1.2rem;
+    }
+    
+    .testimonial-content p {
+        font-size: 0.95rem;
+    }
+}
+</style>
+
+<script>
+// Инициализация слайдера отзывов
+document.addEventListener('DOMContentLoaded', function() {
+    const testimonialsSwiper = new Swiper('.testimonials-swiper', {
+        loop: true,
+        autoplay: {
+            delay: 7000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+            },
+            768: {
+                slidesPerView: 1,
+                spaceBetween: 30,
+            },
+            1024: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+            },
+        }
+    });
+    
+    // Анимация аватарок при скролле
+    const avatarBorders = document.querySelectorAll('.avatar-border');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationPlayState = 'running';
+            } else {
+                entry.target.style.animationPlayState = 'paused';
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    avatarBorders.forEach(border => observer.observe(border));
+});
+</script>
+
+
+    <!-- Секция "Обсудим ваш проект?" -->
+<section class="discuss-project" id="contact" style="background: #000000; margin-top: -10%;">
+    <div class="particles"></div>
+    <div class="container">
+        <div class="discuss-container" data-aos="fade-up">
+            <div class="discuss-content">
+                <div class="discuss-text">
+                    <h2 class="section-title">Обсудим ваш проект?</h2>
+                    <p class="section-subtitle" style="margin-right: 40%;">Свяжитесь со мной в Telegram или WhatsApp. Отвечу быстро!</p>
+                    
+                    <div class="contact-buttons">
+                        <a href="https://wa.me/79874051235" class="contact-btn whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </a>
+                        
+                        <a href="https://t.me/element70" class="contact-btn telegram-btn" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                            <span>Telegram</span>
+                        </a>
+                    </div>
+                    
+                    <div class="social-links">
+                        <p>Я в соцсетях:</p>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="fab fa-vk"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="qr-container">
+                    <div class="qr-code">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://t.me/element70" alt="Telegram QR Code">
+                    </div>
+                    <p>Наведите камеру на QR-код</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Основные стили */
+.discuss-project {
+    background-color: var(--cosmic-purple);
+    position: relative;
+    padding: 8rem 0;
+}
+
+.discuss-container {
+    background: var(--gradient-accent);
+    border-radius: 30px;
+    padding: 4rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.discuss-content {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* Текстовая часть (выравнивание по левому краю) */
+.discuss-text {
+    text-align: left;
+}
+
+.discuss-text .section-title {
+    color: white;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.discuss-text .section-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 3rem;
+    text-align: left;
+}
+
+/* Кнопки */
+.contact-buttons {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    justify-content: flex-start;
+}
+
+.contact-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 1.8rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.whatsapp-btn {
+    background: #25D366;
+    color: white;
+}
+
+.telegram-btn {
+    background: #0088cc;
+    color: white;
+}
+
+.contact-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* QR-код */
+.qr-container {
+    position: relative;
+    text-align: center;
+}
+
+.qr-code {
+    width: 200px;
+    height: 200px;
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: float 6s ease-in-out infinite;
+}
+
+.qr-code img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.qr-container p {
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Анимация плавания */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Социальные иконки */
+.social-links {
+    text-align: left;
+}
+
+.social-links p {
+    color: white;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+}
+
+.social-icon {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background: white;
+    color: var(--neon-magenta);
+    transform: translateY(-3px);
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+    .discuss-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .qr-container {
+        margin-top: 3rem;
+    }
+    
+    .contact-buttons {
+        justify-content: center;
+    }
+    
+    .social-icons {
+        justify-content: center;
+    }
+    
+    .discuss-text,
+    .discuss-text .section-title,
+    .discuss-text .section-subtitle,
+    .social-links {
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .discuss-project {
+        padding: 6rem 0;
+    }
+    
+    .discuss-container {
+        padding: 3rem;
+    }
+    
+    .contact-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .qr-code {
+        width: 150px;
+        height: 150px;
+    }
+}
+</style>
+
+
+    <!-- Футер -->
+   <footer id="contact">
+    <!-- Анимированный полукруг над футером -->
+    <div class="footer-glow"></div>
+    
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column footer-about">
+                <a href="#" class="footer-logo" style="filter: drop-shadow(0 0 10px rgba(0, 85, 254, 0.4));">
+                    <span>Systemica</span>
+                </a>
+                <p>Мы создаем цифровые продукты, которые меняют правила игры и задают новые стандарты в индустрии.</p>
+                <div class="footer-social">
+                    <a href="#" style="filter: drop-shadow(0 0 8px rgba(0, 85, 254, 0.3));"><i class="fab fa-vk"></i></a>
+                    <a href="#" style="filter: drop-shadow(0 0 12px rgba(0, 85, 254, 0.5));"><i class="fab fa-telegram"></i></a>
+                    <a href="#" style="filter: drop-shadow(0 0 8px rgba(0, 85, 254, 0.3));"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3 style="filter: drop-shadow(0 0 5px rgba(0, 85, 254, 0.2));">Услуги</h3>
+                <ul>
+                    <li><a href="#">Веб-разработка</a></li>
+                    <li><a href="#">Мобильные приложения</a></li>
+                    <li><a href="#">Искусственный интеллект</a></li>
+                    <li><a href="#">Чат-боты</a></li>
+                    <li><a href="#">Контент и медиа</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3 style="filter: drop-shadow(0 0 5px rgba(0, 85, 254, 0.2));">Карта сайта</h3>
+                <ul>
+                    <li><a href="#">О нас</a></li>
+                    <li><a href="#">Услуги</a></li>
+                    <li><a href="#">Кейсы</a></li>
+                    <li><a href="#">Контакты</a></li>
+                    <li><a href="#">Блог</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3 style="filter: drop-shadow(0 0 5px rgba(0, 85, 254, 0.2));">Контакты</h3>
+                <ul>
+                    <li><a href="mailto:info@nexuscore.ru">Telegram</a></li>
+                    <li><a href="tel:+79991234567">WhatsApp</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="filter: drop-shadow(0 0 5px rgba(0, 85, 254, 0.2));"><a href="#">Systemica</a> — когда бизнес работает как система. С AI, Telegram и здравым смыслом.</p>
+        </div>
+    </div>
+</footer>
+
+<style>
+/* Стили для анимированного полукруга */
+.footer-glow {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120%;
+    height: 100px;
+    background: radial-gradient(ellipse at center, 
+        rgba(0, 85, 254, 0.15) 0%, 
+        rgba(0, 85, 254, 0.1) 50%, 
+        transparent 70%);
+    border-radius: 50% 50% 0 0;
+    animation: pulseGlow 6s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes pulseGlow {
+    0% { 
+        width: 120%;
+        opacity: 0.3;
+    }
+    50% { 
+        width: 130%;
+        opacity: 0.5;
+    }
+    100% { 
+        width: 120%;
+        opacity: 0.3;
+    }
+}
+
+/* Базовые стили футера */
+footer {
+    position: relative;
+    background: #000;
+    color: #fff;
+    padding: 80px 0 30px;
+    overflow: hidden;
+    border-top: 1px solid rgba(0, 85, 254, 0.2);
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 85, 254, 0.5), 
+        transparent);
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.footer-social a {
+    display: inline-block;
+    margin-right: 15px;
+    font-size: 1.2rem;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.footer-social a:hover {
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    margin-top: 50px;
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+    }
+    
+    .footer-glow {
+        width: 150% !important;
+        animation: pulseGlowMobile 6s ease-in-out infinite;
+    }
+    
+    @keyframes pulseGlowMobile {
+        0% { width: 150%; }
+        50% { width: 160%; }
+        100% { width: 150%; }
+    }
+}
+</style>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script>
+        // Инициализация слайдера
+        const swiper = new Swiper('.swiper', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                },
+            }
+        });
+
+        // Частицы для героя
+        function createParticles(containerId, count = 50) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Случайные параметры
+                const size = Math.random() * 5 + 1;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const opacity = Math.random() * 0.5 + 0.1;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                const color = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${opacity})`;
+                
+                // Применяем стили
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.opacity = opacity;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.background = color;
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Создаем частицы
+        createParticles('hero-particles', 80);
+        
+        // Анимация при скролле
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('[data-aos]');
+            const windowHeight = window.innerHeight;
+            const triggerPoint = windowHeight / 5 * 4;
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                
+                if (elementTop < triggerPoint) {
+                    element.classList.add('aos-animate');
+                }
+            });
+        }
+
+        // Запускаем при загрузке и скролле
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+        
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Фиксация шапки при скролле
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Мобильное меню
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+
+       // Анимация шагов
+// Анимация шагов
+function animateSteps() {
+    const steps = document.querySelectorAll('.step');
+    const stepsContainer = document.querySelector('.work-steps');
+    
+    if (!stepsContainer) return;
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                steps.forEach((step, index) => {
+                    setTimeout(() => {
+                        step.classList.add('active');
+                    }, index * 200);
+                });
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    });
+    
+    observer.observe(stepsContainer);
+}
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', () => {
+    animateSteps();
+    
+    // Также запускаем при полной загрузке страницы на случай,
+    // если DOMContentLoaded сработал слишком рано
+    window.addEventListener('load', animateSteps);
+});
+
+
+// Анимация sticky-секции
+function animateStickySection() {
+    const stickySection = document.querySelector('.services-sticky-container');
+    if (!stickySection) return;
+    
+    const image = stickySection.querySelector('.services-sticky-image img');
+    
+    // Параллакс-эффект для изображения
+    window.addEventListener('scroll', function() {
+        if (window.innerWidth > 992) {
+            const scrollPosition = window.scrollY;
+            const imagePosition = stickySection.offsetTop;
+            const distance = scrollPosition - imagePosition;
+            
+            if (distance > 0 && distance < stickySection.offsetHeight) {
+                image.style.transform = `translateY(${distance * 0.1}px)`;
+            }
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', animateStickySection);
+
+    </script>
+</body>
+</html>
